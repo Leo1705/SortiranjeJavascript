@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortiranje na podatoci | Leonid</title>
+</head>
+<body>
+    <ul class="ulGlavan">
+        <li class="li">
+        <p class="text1">Tuka stoi Text 1 </p>
+        <p class="clen1">35</p>
+        <p class="clen2">100</p>
+        </li>
+        <li>
+            <p class="text1">Tuka stoi Text 2 </p>
+            <p class="clen1 test123">35</p>
+            <p class="clen2">100</p>
+            </li>
+            <li>
+                <p class="text1">Tuka stoi Text 3 </p>
+                <p class="clen1">35</p>
+                <p class="clen2">100</p>
+                </li>
+                <li>
+                    <p class="text1">Tuka stoi Text 3 </p>
+                    <p class="clen1">35</p>
+                    <p class="clen2">100</p>
+                    </li>
+                    <li>
+                        <p class="text1">Tuka stoi Text 1 </p>
+                        <p class="clen1">35</p>
+                        <p class="clen2">100</p>
+                        </li>
+    </ul>
+    <button class="podredi1">Podredi po Clen 1 </button>
+    <button class="podredi2">Podredi po Clen 2 </button>
+</body>
+</html>
+
+<style>
+    *{
+        margin:0px;
+        padding:0px;
+    }
+.clen1{
+    background-color:green;
+}
+.clen2{
+    background-color:blue;
+}
+</style>
+<script>
+    podrediClen = {
+        izbranRoot: '',
+        izbranClen: '',
+       biramRoot: (root)=>{
+        this.izbranRoot = document.querySelector(root);
+       } ,
+        
+        biramClen: (clen) =>{
+             this.izbranClen = this.izbranRoot.querySelectorAll(clen);
+            console.log(this.izbranClen);
+
+        },
+        sortiram: ()=>{
+var list = this.izbranRoot;
+var items = this.izbranClen;
+
+var itemsArr = [];
+for (var i in items) {
+        itemsArr.push(items[i]);
+    
+}
+
+itemsArr.sort(function(a, b) {
+  return a.innerHTML == b.innerHTML
+          ? 0
+          : (a.innerHTML > b.innerHTML ? 1 : -1);
+});
+
+for (i = 0; i < itemsArr.length; ++i) {
+
+  list.appendChild(itemsArr[i]);
+  console.log(itemsArr[i]);
+}
+        }
+        
+    }
+</script>
