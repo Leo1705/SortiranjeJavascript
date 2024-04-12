@@ -14,23 +14,23 @@
         </li>
         <li>
             <p class="text1">Tuka stoi Text 2 </p>
-            <p class="clen1 test123">35</p>
-            <p class="clen2">100</p>
+            <p class="clen1">50</p>
+            <p class="clen2">200</p>
             </li>
             <li>
                 <p class="text1">Tuka stoi Text 3 </p>
-                <p class="clen1">35</p>
-                <p class="clen2">100</p>
+                <p class="clen1">123</p>
+                <p class="clen2">300</p>
                 </li>
                 <li>
                     <p class="text1">Tuka stoi Text 3 </p>
-                    <p class="clen1">35</p>
-                    <p class="clen2">100</p>
+                    <p class="clen1">23</p>
+                    <p class="clen2">500</p>
                     </li>
                     <li>
                         <p class="text1">Tuka stoi Text 1 </p>
-                        <p class="clen1">35</p>
-                        <p class="clen2">100</p>
+                        <p class="clen1">1</p>
+                        <p class="clen2">10</p>
                         </li>
     </ul>
     <button class="podredi1">Podredi po Clen 1 </button>
@@ -51,40 +51,61 @@
 }
 </style>
 <script>
+
     podrediClen = {
         izbranRoot: '',
         izbranClen: '',
+        items: [],
+        kojClen: '',
        biramRoot: (root)=>{
         this.izbranRoot = document.querySelector(root);
        } ,
+       kojClen: (clen)=>{
+        this.kojClen = clen;
+       },
         
         biramClen: (clen) =>{
              this.izbranClen = this.izbranRoot.querySelectorAll(clen);
-            console.log(this.izbranClen);
+             console.log(izbranClen);
+             this.izbranClen.forEach(item => {
+                console.log(podrediClen.items);
+                podrediClen.items.push(item);
+             })
+
+            console.log(podrediClen.items);
 
         },
         sortiram: ()=>{
-var list = this.izbranRoot;
-var items = this.izbranClen;
 
-var itemsArr = [];
-for (var i in items) {
-        itemsArr.push(items[i]);
+// var itemsArr = [];
+// for (var i in items) {
+//         itemsArr.push(items[i]);
     
-}
+// }
 
-itemsArr.sort(function(a, b) {
-  return a.innerHTML == b.innerHTML
+console.log(podrediClen.items);
+
+podrediClen.items.sort(function(a, b) {
+
+
+  return parseInt(a.querySelector(this.kojClen).innerText) == parseInt(b.querySelector(this.kojClen).innerText)
           ? 0
-          : (a.innerHTML > b.innerHTML ? 1 : -1);
+          : (parseInt(a.querySelector(this.kojClen).innerText) > parseInt(b.querySelector(this.kojClen).innerText) ? 1 : -1);
 });
 
-for (i = 0; i < itemsArr.length; ++i) {
+for (i = 0; i < podrediClen.items.length; ++i) {
 
-  list.appendChild(itemsArr[i]);
-  console.log(itemsArr[i]);
+  this.izbranRoot.appendChild(podrediClen.items[i]);
+//   console.log(itemsArr[i]);
 }
         }
         
     }
+
+
+    
+podrediClen.biramRoot(".ulGlavan");
+podrediClen.biramClen("li");
+podrediClen.kojClen('.clen2');
+
 </script>
