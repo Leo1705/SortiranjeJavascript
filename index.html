@@ -4,108 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sortiranje na podatoci | Leonid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .clen1 {
+            background-color: green;
+        }
+        .clen2 {
+            background-color: blue;
+        }
+    </style>
 </head>
 <body>
     <ul class="ulGlavan">
         <li class="li">
-        <p class="text1">Tuka stoi Text 1 </p>
-        <p class="clen1">35</p>
-        <p class="clen2">100</p>
+            <p class="text1">Tuka stoi Text 1 </p>
+            <p class="clen1">35</p>
+            <p class="clen2">100</p>
         </li>
         <li>
             <p class="text1">Tuka stoi Text 2 </p>
             <p class="clen1">50</p>
             <p class="clen2">200</p>
-            </li>
-            <li>
-                <p class="text1">Tuka stoi Text 3 </p>
-                <p class="clen1">123</p>
-                <p class="clen2">300</p>
-                </li>
-                <li>
-                    <p class="text1">Tuka stoi Text 3 </p>
-                    <p class="clen1">23</p>
-                    <p class="clen2">500</p>
-                    </li>
-                    <li>
-                        <p class="text1">Tuka stoi Text 1 </p>
-                        <p class="clen1">1</p>
-                        <p class="clen2">10</p>
-                        </li>
+        </li>
+        <li>
+            <p class="text1">Tuka stoi Text 3 </p>
+            <p class="clen1">123</p>
+            <p class="clen2">300</p>
+        </li>
+        <li>
+            <p class="text1">Tuka stoi Text 3 </p>
+            <p class="clen1">23</p>
+            <p class="clen2">500</p>
+        </li>
+        <li>
+            <p class="text1">Tuka stoi Text 1 </p>
+            <p class="clen1">1</p>
+            <p class="clen2">10</p>
+        </li>
     </ul>
     <button class="podredi1">Podredi po Clen 1 </button>
     <button class="podredi2">Podredi po Clen 2 </button>
+
+    <script>
+        const podrediClen = {
+            izbranRoot: null,
+            izbranClen: null,
+            items: [],
+            kojClen: '',
+
+            biramRoot: (root) => {
+                podrediClen.izbranRoot = document.querySelector(root);
+            },
+
+            biramClen: (clen) => {
+                podrediClen.izbranClen = podrediClen.izbranRoot.querySelectorAll(clen);
+                podrediClen.izbranClen.forEach(item => {
+                    podrediClen.items.push(item);
+                });
+            },
+
+            sortiram: function() {
+                podrediClen.items.sort((a, b) => {
+                    const aValue = parseInt(a.querySelector(this.kojClen).innerText);
+                    const bValue = parseInt(b.querySelector(this.kojClen).innerText);
+                    return aValue - bValue;
+                });
+
+                podrediClen.items.forEach(item => {
+                    podrediClen.izbranRoot.appendChild(item);
+                });
+            }
+        };
+
+        podrediClen.biramRoot(".ulGlavan");
+        podrediClen.biramClen("li");
+        podrediClen.kojClen = '.clen2';
+
+        const podrediButton1 = document.querySelector('.podredi1');
+        const podrediButton2 = document.querySelector('.podredi2');
+
+        podrediButton1.addEventListener('click', () => {
+            podrediClen.kojClen = '.clen1';
+            podrediClen.sortiram();
+        });
+
+        podrediButton2.addEventListener('click', () => {
+            podrediClen.kojClen = '.clen2';
+            podrediClen.sortiram();
+        });
+    </script>
 </body>
 </html>
-
-<style>
-    *{
-        margin:0px;
-        padding:0px;
-    }
-.clen1{
-    background-color:green;
-}
-.clen2{
-    background-color:blue;
-}
-</style>
-<script>
-
-    podrediClen = {
-        izbranRoot: '',
-        izbranClen: '',
-        items: [],
-        kojClen: '',
-       biramRoot: (root)=>{
-        this.izbranRoot = document.querySelector(root);
-       } ,
-       kojClen: (clen)=>{
-        this.kojClen = clen;
-       },
-        
-        biramClen: (clen) =>{
-             this.izbranClen = this.izbranRoot.querySelectorAll(clen);
-             console.log(izbranClen);
-             this.izbranClen.forEach(item => {
-                console.log(podrediClen.items);
-                podrediClen.items.push(item);
-             })
-
-            console.log(podrediClen.items);
-
-        },
-        sortiram: ()=>{
-
-// var itemsArr = [];
-// for (var i in items) {
-//         itemsArr.push(items[i]);
-    
-// }
-
-console.log(podrediClen.items);
-
-podrediClen.items.sort(function(a, b) {
-
-
-  return parseInt(a.querySelector(this.kojClen).innerText) == parseInt(b.querySelector(this.kojClen).innerText)
-          ? 0
-          : (parseInt(a.querySelector(this.kojClen).innerText) > parseInt(b.querySelector(this.kojClen).innerText) ? 1 : -1);
-});
-
-for (i = 0; i < podrediClen.items.length; ++i) {
-
-  this.izbranRoot.appendChild(podrediClen.items[i]);
-//   console.log(itemsArr[i]);
-}
-        }
-        
-    }
-
-
-    
-podrediClen.biramRoot(".ulGlavan");
-podrediClen.biramClen("li");
-podrediClen.kojClen('.clen2');
-
-</script>
