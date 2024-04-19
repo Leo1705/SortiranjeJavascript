@@ -5,96 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sortiranje na podatoci | Leonid</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
         }
-        .clen1 {
-            background-color: green;
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
         }
-        .clen2 {
-            background-color: blue;
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
         }
-    </style>
+        </style>
 </head>
 <body>
-    <ul class="ulGlavan">
-        <li class="li">
-            <p class="text1">Tuka stoi Text 1 </p>
-            <p class="clen1">35</p>
-            <p class="clen2">100</p>
-        </li>
-        <li>
-            <p class="text1">Tuka stoi Text 2 </p>
-            <p class="clen1">50</p>
-            <p class="clen2">200</p>
-        </li>
-        <li>
-            <p class="text1">Tuka stoi Text 3 </p>
-            <p class="clen1">123</p>
-            <p class="clen2">300</p>
-        </li>
-        <li>
-            <p class="text1">Tuka stoi Text 3 </p>
-            <p class="clen1">23</p>
-            <p class="clen2">500</p>
-        </li>
-        <li>
-            <p class="text1">Tuka stoi Text 1 </p>
-            <p class="clen1">1</p>
-            <p class="clen2">10</p>
-        </li>
-    </ul>
+ 
+<table>
+    <thead>
+        <tr>
+        <th>Ime i prezime</th>
+        <th data-sortiraj="td:nth-child(2)" data-sortiraj-redosled="ASC">Makedonski Jazik</th>
+        <th data-sortiraj="td:nth-child(3)" data-sortiraj-redosled="ASC">Fizika</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>Leonid Petkovski</td>
+        <td data-predmet="makedonski">5</td>
+        <td>2</td>
+        </tr>
+        <tr>
+        <td>Todor Antevski</td>
+        <td>3</td>
+        <td>4</td>
+        </tr>
+        <tr>
+        <td>Luka Stankovski</td>
+        <td>5</td>
+        <td>1</td>
+        </tr>
+        <tr>
+        <td>Melanija Kostadinovska</td>
+        <td>3</td>
+        <td>1</td>
+        </tr>
+    </tbody>
+  </table>
     <button class="podredi1">Podredi po Clen 1 </button>
     <button class="podredi2">Podredi po Clen 2 </button>
 
     <script>
         const podrediClen = {
             izbranRoot: null,
-            izbranClen: null,
             items: [],
-            kojClen: '',
+            kojClen: '',            
 
             biramRoot: (root) => {
                 podrediClen.izbranRoot = document.querySelector(root);
-            },
-
-            biramClen: (clen) => {
-                podrediClen.izbranClen = podrediClen.izbranRoot.querySelectorAll(clen);
-                podrediClen.izbranClen.forEach(item => {
+                podrediClen.izbranRoot.childNodes.forEach(item=>{
+                if(item.nodeType !=3){
                     podrediClen.items.push(item);
-                });
+                }
+            })
             },
-
-            sortiram: function() {
+           
+            sortiram: function(kojClen, redosled) {
                 podrediClen.items.sort((a, b) => {
-                    const aValue = parseInt(a.querySelector(this.kojClen).innerText);
-                    const bValue = parseInt(b.querySelector(this.kojClen).innerText);
+                    const aValue = parseInt(a.querySelector(kojClen).innerText);
+                    const bValue = parseInt(b.querySelector(kojClen).innerText);
+                    
                     return aValue - bValue;
                 });
+
+                if (redosled=="DESC") {
+                    podrediClen.items.reverse();
+                }
 
                 podrediClen.items.forEach(item => {
                     podrediClen.izbranRoot.appendChild(item);
                 });
+            
             }
         };
 
-        podrediClen.biramRoot(".ulGlavan");
-        podrediClen.biramClen("li");
-        podrediClen.kojClen = '.clen2';
+        podrediClen.biramRoot("tbody");
 
-        const podrediButton1 = document.querySelector('.podredi1');
-        const podrediButton2 = document.querySelector('.podredi2');
-
-        podrediButton1.addEventListener('click', () => {
-            podrediClen.kojClen = '.clen1';
-            podrediClen.sortiram();
-        });
-
-        podrediButton2.addEventListener('click', () => {
-            podrediClen.kojClen = '.clen2';
-            podrediClen.sortiram();
-        });
+       document.querySelectorAll('[data-sortiraj]').forEach(button=>{
+        button.addEventListener("click", ()=>{
+            if(button.dataset.sortirajRedosled == "DESC")
+                button.dataset.sortirajRedosled="ASC";
+            else
+                button.dataset.sortirajRedosled = "DESC";
+            podrediClen.sortiram(button.dataset.sortiraj, button.dataset.sortirajRedosled);
+        })
+       })
     </script>
 </body>
 </html>
